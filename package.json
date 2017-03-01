@@ -13,6 +13,9 @@
     "typescript": "^2.2.1"
   },
   "dependencies": {
-    "node-cli-args": "^1.0.1"
+    "node-cli-args": "^1.0.5"
+  },
+  "bin": {
+    "lljson": "bin/index.js"
   }
 }
