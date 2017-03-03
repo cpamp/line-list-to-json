@@ -35,6 +35,13 @@ OutFile.json:
 
 ## Optional params
 
+### Overwrite
+
+Overwrite the outFile if it already exists.  
+```
+[-o, --overwrite]
+```
+
 ### Pretty
 
 Pretty print JSON. Assign value for spacing.  
@@ -42,9 +49,9 @@ Pretty print JSON. Assign value for spacing.
 [-p, --pretty=2]
 ```
 
-### Overwrite
+### Unique
 
-Overwrite the outFile if it already exists.  
+Only keep unique lines.  
 ```
-[-o, --overwrite]
+[-u, --unique]
 ```

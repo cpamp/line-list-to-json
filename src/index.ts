@@ -19,6 +19,11 @@ argManager.on(new Argument('overwrite', 'o'), () => {
     overwrite = true;
 });
 
+var unique: boolean = false;
+argManager.on(new Argument('unique', 'u'), () => {
+    unique = true;
+});
+
 var outFile: string = '',
     inFile: string = '';
 argManager.onDefault((defaults) => {
@@ -52,7 +57,9 @@ var lineReader = createInterface({
 
 var newArray: string[] = [];
 lineReader.on('line', (line: string) => {
-    newArray.push(line);
+    if (!unique || newArray.indexOf(line) === -1) {
+        newArray.push(line);
+    }
 });
 
 lineReader.on('close', () => {
