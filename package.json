@@ -1,6 +1,6 @@
 {
   "name": "line-list-to-json",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Convert a lined list to a JSON array",
   "main": "bin/index.js",
   "scripts": {
