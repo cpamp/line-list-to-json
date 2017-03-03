@@ -24,6 +24,11 @@ argManager.on(new Argument('unique', 'u'), () => {
     unique = true;
 });
 
+var noBlank: boolean = false;
+argManager.on(new Argument('no-blank', 'b'), () => {
+    noBlank = true;
+});
+
 var outFile: string = '',
     inFile: string = '';
 argManager.onDefault((defaults) => {
@@ -57,7 +62,8 @@ var lineReader = createInterface({
 
 var newArray: string[] = [];
 lineReader.on('line', (line: string) => {
-    if (!unique || newArray.indexOf(line) === -1) {
+    if ((!unique || newArray.indexOf(line) === -1) &&
+        (!noBlank || line.replace(' ', '') !== '')) {
         newArray.push(line);
     }
 });

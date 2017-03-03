@@ -35,6 +35,13 @@ OutFile.json:
 
 ## Optional params
 
+### No Blank
+
+Ignore blank lines.  
+```
+[-b, --no-blank]
+```
+
 ### Overwrite
 
 Overwrite the outFile if it already exists.  
