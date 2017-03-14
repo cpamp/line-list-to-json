@@ -13,7 +13,7 @@ var pretty: boolean,
 argManager.on(new Argument('pretty', 'p', 2), (value, defaultValue) => {
     pretty = true;
     var parsed = parseInt(value);
-    prettySpace = parsed !== NaN ? parsed : defaultValue;
+    prettySpace = parsed !== parsed ? defaultValue : parsed;
 });
 
 var overwrite: boolean = false;
