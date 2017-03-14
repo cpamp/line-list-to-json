@@ -3,6 +3,8 @@
 import { ArgumentManager, Argument } from 'node-cli-args';
 import * as fs from 'fs';
 import { createInterface } from 'readline';
+import { sort } from './sort';
+import * as colors from 'colorful-text';
 
 var argManager = new ArgumentManager();
 
@@ -29,12 +31,27 @@ argManager.on(new Argument('no-blank', 'b'), () => {
     noBlank = true;
 });
 
+var ascending: boolean = false;
+argManager.on(new Argument('sort-ascending', 'a'), () => {
+    ascending = true;
+});
+
+var descending: boolean = false;
+argManager.on(new Argument('sort-descending', 'd'), () => {
+    descending = true;
+});
+
+if(ascending && descending) {
+    console.log(colors.fg.red('Error: Only sort by ascending or descending.'));
+    process.exit();
+}
+
 var outFile: string = '',
     inFile: string = '';
 argManager.onDefault((defaults) => {
     if (defaults.length < 2) { 
-        console.log('Error: InFile and OutFile required.');
-        console.log('Ex:' + '\x1b[41m\x1b[33mlljson path/to/in/file.txt outFileName [-p, --pretty=2] [-o, --overwrite]\x1b[0m');
+        console.log(colors.fg.red('Error: InFile and OutFile required.'));
+        console.log('Ex:' + colors.fg.green('lljson path/to/in/file.txt outFileName [-p, --pretty=2] [-o, --overwrite]'));
         process.exit();
     }
 
@@ -46,13 +63,13 @@ argManager.onDefault((defaults) => {
 });
 
 if (!fs.existsSync(inFile)) {
-    console.log('InFile does not exist: ' + inFile);
+    console.log(colors.fg.red('InFile does not exist: ' + inFile));
     process.exit();
 }
 
 if (!overwrite && fs.existsSync(outFile)) {
-    console.log('OutFile already exists: ' + outFile);
-    console.log('Use [-o, --overwrite] to overwrite the file.');
+    console.log(colors.fg.red('OutFile already exists: ' + outFile));
+    console.log(colors.fg.red('Use [-o, --overwrite] to overwrite the file.'));
     process.exit();
 }
 
@@ -69,6 +86,10 @@ lineReader.on('line', (line: string) => {
 });
 
 lineReader.on('close', () => {
+    newArray = 
+        ascending ? sort(newArray, true) :
+        descending ? sort(newArray, false) :
+        newArray;
     var json: string = pretty ? JSON.stringify(newArray, null, prettySpace) : JSON.stringify(newArray);
 
     fs.writeFile(outFile, json, (err) => {

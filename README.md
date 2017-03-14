@@ -56,6 +56,22 @@ Pretty print JSON. Assign value for spacing.
 [-p, --pretty=2]
 ```
 
+### Sorting
+
+#### Ascending
+
+Sort list ascending.  
+```
+[-a, --sort-ascending]
+```
+
+#### Descending
+
+Sort list descending.  
+```
+[-d, --sort-descending]
+```
+
 ### Unique
 
 Only keep unique lines.  
